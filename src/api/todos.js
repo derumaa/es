@@ -17,6 +17,6 @@ export default class Todos {
     }
 
     async delete({ id }) {
-        const { data } = await axios.post(`/todos/${id}`)
+        await axios.delete(`/todos/${id}`)
     }
 }
