@@ -1,10 +1,24 @@
+import {createApp} from 'vue'
 import Todos from './api/todos'
+import './assets/css/main.css'
 
-async function exec() {
-    const todos = new Todos()
+const apiTodos = new Todos()
 
-    const response = await todos.delete({id: 5})
-    console.log(response)
-}
+const app = createApp({
+    data() {
+        return {
+            todos: [],
+        }
+    },
+    async created(){
+        this.fetchTodos()
+    },
+    methods: {
+        async fetchTodos() {
+            this.todos = await apiTodos.index()
+            console.log(this.todos)
+        }
+    },
+})
 
-exec()
+app.mount('#app')
