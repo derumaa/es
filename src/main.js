@@ -8,16 +8,35 @@ const app = createApp({
     data() {
         return {
             todos: [],
+            form: {
+                text: '',
+                done: false,
+            },
         }
     },
-    async created(){
+    created(){
         this.fetchTodos()
     },
     methods: {
         async fetchTodos() {
             this.todos = await apiTodos.index()
-            console.log(this.todos)
-        }
+        },
+        async createTodo(){
+            const data = await apiTodos.store(this.form)
+            this.todos.push(data)
+
+            this.form.text = ''
+            this.form.done = false
+        },
+        async toggleTodoStatus(todo){
+            const data = await apiTodos.update({
+                ...todo,
+                done: !todo.done,
+            })
+
+            const index = this.todos.findIndex(({id}) => id === data.id)
+            this.todos[index] = data
+        },
     },
 })
 
