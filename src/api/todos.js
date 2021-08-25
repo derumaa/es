@@ -16,7 +16,7 @@ export default class Todos {
         return data
     }
 
-    async delete({ id }) {
+    async destroy({ id }) {
         await axios.delete(`/todos/${id}`)
     }
 }

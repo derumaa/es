@@ -21,14 +21,14 @@ const app = createApp({
         async fetchTodos() {
             this.todos = await apiTodos.index()
         },
-        async createTodo(){
+        async createTodo() {
             const data = await apiTodos.store(this.form)
             this.todos.push(data)
 
             this.form.text = ''
             this.form.done = false
         },
-        async toggleTodoStatus(todo){
+        async toggleTodoStatus(todo) {
             const data = await apiTodos.update({
                 ...todo,
                 done: !todo.done,
@@ -36,6 +36,12 @@ const app = createApp({
 
             const index = this.todos.findIndex(({id}) => id === data.id)
             this.todos[index] = data
+        },
+        async destroyTodo(id) {
+            await apiTodos.destroy({ id })
+
+            const index = this.todos.findIndex((todo) => todo.id === id )
+            this.todos.splice(index, 1)
         },
     },
 })
