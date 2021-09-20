@@ -10,7 +10,7 @@ const app = createApp({
             todos: [],
             form: {
                 text: '',
-                done: false,
+                done: false, 
             },
         }
     },
